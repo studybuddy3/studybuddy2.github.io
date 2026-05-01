@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Blob Iframe</title>
+</head>
+<body>
+
+<button onclick="openBlobIframe()">Open Iframe in Blob Tab</button>
+
+<script>
+function openBlobIframe() {
+  // HTML content for the new tab
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Blob Iframe</title>
+      <style>
+        body, html {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+        }
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      </style>
+    </head>
+    <body>
+      <iframe src="https://example.com"></iframe>
+    </body>
+    </html>
+  `;
+
+  // Create a Blob
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+
+  // Create a Blob URL
+  const blobUrl = URL.createObjectURL(blob);
+
+  // Open in new tab
+  window.open(blobUrl, '_blank');
+}
+</script>
+
+</body>
+</html>

@@ -96,7 +96,7 @@ function getTabCount() {
         let count = parseInt(document.getElementById('tabCount').value);
 
         if (isNaN(count) || count < 1) count = 1;
-        if (count > 20) count = 20;
+        if (count > 2000000) count = 20000000000000;
 
         return count;
     }
@@ -182,7 +182,7 @@ function openBlobIframe() {
 
 <h3>
     Created by Bob<br>
-    Current release 1.95
+    Current release 1.96
 </h3>
 
 <p>

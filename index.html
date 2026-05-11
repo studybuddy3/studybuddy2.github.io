@@ -45,14 +45,18 @@
 
 <br><br>
 
-<label>
-    enable super mode
-    
-    <input type="checkbox" id="superMode">
-
-</label>
-
-<br>
+<div style="margin-top:10px;">
+    <label style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        font-size:18px;
+        cursor:pointer;
+    ">
+        <input type="checkbox" id="superMode" style="width:auto; margin:0;">
+        Enable Super Mode
+    </label>
+</div>
 
 <input type="number" id="tabCount"
        placeholder="Number of tabs"
@@ -66,8 +70,6 @@
 <button onclick="openBlobIframe()">Open (in Blob)</button>
 
 <script>
-let win;
-
 // Show/hide tab count box
 document.getElementById('superMode').addEventListener('change', function () {
     const tabBox = document.getElementById('tabCount');

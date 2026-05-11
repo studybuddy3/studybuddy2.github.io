@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeterEmbeder.TM</title>
+    <title>Better-Bypasser.TM</title>
 
     <style>
         body {
@@ -23,20 +23,40 @@
             margin: 10px 5px;
             cursor: pointer;
         }
+
+        #tabCount {
+            width: 150px;
+            display: none;
+        }
     </style>
 </head>
 
 <body>
 
-<h1>Hi, this is the second public release of BeterEmbeder.TM</h1>
+<h1>public release of Better-Bypasser.TM</h1>
 
 <h2>
-    Works best on https://azgames.io
+    Works best on https://azgames.io<br>
     Reloading may break things.<br>
     Copy URLs instead of clicking links.
 </h2>
 
 <input type="text" id="urlInput" placeholder="Enter URL here">
+
+<br><br>
+
+<label>
+    <input type="checkbox" id="superMode">
+    Enable Super Mode
+</label>
+
+<br>
+
+<input type="number" id="tabCount"
+       placeholder="Number of tabs"
+       min="1"
+       max="20"
+       value="1">
 
 <br>
 
@@ -46,12 +66,37 @@
 <script>
 let win;
 
+// Show/hide tab count box
+document.getElementById('superMode').addEventListener('change', function () {
+    const tabBox = document.getElementById('tabCount');
+
+    if (this.checked) {
+        tabBox.style.display = 'inline-block';
+    } else {
+        tabBox.style.display = 'none';
+    }
+});
+
 // Fix URL helper
 function fixUrl(url) {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         return 'https://' + url;
     }
     return url;
+}
+
+// Get number of tabs
+function getTabCount() {
+    if (document.getElementById('superMode').checked) {
+        let count = parseInt(document.getElementById('tabCount').value);
+
+        if (isNaN(count) || count < 1) count = 1;
+        if (count > 20) count = 20;
+
+        return count;
+    }
+
+    return 1;
 }
 
 // Method 1: about:blank iframe
@@ -65,10 +110,13 @@ function openBlank() {
 
     url = fixUrl(url);
 
-    if (win && !win.closed) {
-        win.focus();
-    } else {
-        win = window.open();
+    const tabs = getTabCount();
+
+    for (let i = 0; i < tabs; i++) {
+        let win = window.open();
+
+        if (!win) continue;
+
         win.document.body.style.margin = '0';
 
         let iframe = win.document.createElement('iframe');
@@ -91,6 +139,8 @@ function openBlobIframe() {
     }
 
     url = fixUrl(url);
+
+    const tabs = getTabCount();
 
     const htmlContent = `
         <!DOCTYPE html>
@@ -119,19 +169,26 @@ function openBlobIframe() {
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const blobUrl = URL.createObjectURL(blob);
 
-    window.open(blobUrl, '_blank');
+    for (let i = 0; i < tabs; i++) {
+        window.open(blobUrl, '_blank');
+    }
 }
 </script>
 
 <h3>
     Created by Bob<br>
-    Current release 1.2<br>
-
+    Current release 1.91
 </h3>
 
 <p>
     <a href="https://forms.gle/K46xvjieZYdT96bT6" target="_blank">
-        Report errors/suggestions
+        Report errors and add suggestions
+    </a>
+</p>
+
+<p>
+    <a href="https://docs.google.com/document/d/1lpYQgpTUwyri8CDFCLecqAau6V2avMckosfovM5Ntxc/edit?usp=sharing" target="_blank">
+        About the tools and how to use it
     </a>
 </p>
 
